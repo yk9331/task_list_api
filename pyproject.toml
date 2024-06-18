@@ -19,6 +19,7 @@ cryptography = "^42.0.8"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
+pre-commit = "^3.7.1"
 
 [build-system]
 requires = ["poetry-core"]

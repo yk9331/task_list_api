@@ -1,8 +1,9 @@
-import os 
+import os
 from typing import Any, Dict, Optional
 
-from pydantic_settings import BaseSettings
 from pydantic import validator
+from pydantic_settings import BaseSettings
+
 
 class DBSettings(BaseSettings):
     DB_HOST: str

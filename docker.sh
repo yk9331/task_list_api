@@ -2,7 +2,7 @@
 
 if [[ $1 == dev ]]; then
     docker-compose -f docker-compose.yaml up
-elif [[ $1 == rebuild ]]; then 
+elif [[ $1 == rebuild ]]; then
     docker-compose -f docker-compose.yaml up --build app
 elif [[ $1 == clear ]]; then
     docker-compose -f docker-compose.yaml down -v

@@ -1,7 +1,7 @@
-import src.models  # noqa
-
 from sqlalchemy import MetaData
 from sqlalchemy.ext.declarative import declarative_base
+
+import src.models  # noqa
 
 convention = {
     "ix": "ix_%(column_0_label)s",
