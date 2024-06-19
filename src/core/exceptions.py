@@ -2,7 +2,7 @@ from typing import Any, Dict, Optional
 
 from fastapi import HTTPException, status
 
-import src.resources.error_msg as error_msg
+import src.core.error_msg as error_msg
 
 
 class BaseException(HTTPException):

@@ -5,9 +5,9 @@ from pydantic import BaseModel
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-import src.resources.error_msg as error_msg
-import src.resources.exceptions as exc
-from src.db.base_class import Base
+import src.core.error_msg as error_msg
+import src.core.exceptions as exc
+from src.core.db.base_class import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)

@@ -2,4 +2,4 @@
 # imported by Alembic for 'autogenerate' support
 
 import src.models  # noqa
-from src.db.base_class import Base  # noqa
+from src.core.db.base_class import Base  # noqa

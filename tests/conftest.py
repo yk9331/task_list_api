@@ -3,8 +3,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
-from src.config import settings
-from src.db.base import Base
+from src.core.config import settings
+from src.core.db.base import Base
 
 
 @pytest.fixture(scope="session")
@@ -32,7 +32,7 @@ def db():
 @pytest.fixture(scope="class", autouse=True)
 def session(app, db):
     """Returns an sqlalchemy session, and after the test tears down everything properly."""
-    from src.db.session import get_db
+    from src.core.db.session import get_db
 
     connection = db.connect()
     # begin the nested transaction

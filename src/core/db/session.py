@@ -5,7 +5,7 @@ from fastapi import Depends
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from src.config import settings
+from src.core.config import settings
 
 engine = create_engine(
     settings.SQLALCHEMY_DATABASE_URI,

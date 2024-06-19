@@ -3,11 +3,12 @@ from fastapi.routing import APIRouter
 from sqlalchemy.orm import Session
 
 from src import controllers, schemas
-from src.core.utils import response_wrapper
-from src.db.session import get_db, managed_transaction
+from src.core.auth import auth_user
+from src.core.db.session import get_db, managed_transaction
+from src.core.decorators import response_wrapper
 
-tasks_router = APIRouter()
-task_router = APIRouter()
+tasks_router = APIRouter(dependencies=[Depends(auth_user)])
+task_router = APIRouter(dependencies=[Depends(auth_user)])
 
 
 @tasks_router.get("/", response_model=schemas.GenericListResponse[schemas.Task])

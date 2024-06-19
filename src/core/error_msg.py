@@ -1,5 +1,9 @@
 CLIENT_ERROR_DEFAULT = "Bad input parameters."
-UNAUTHORIZED_DEFAULT = "Invalid authentication."
+
+UNAUTHORIZED_DEFAULT = "Invalid authorization."
+INVALID_AUTHORIZATION_SCHEME = "Invalid authorization scheme."
+INVALID_TOKEN = "Invalid or expired token."
+
 FORBIDDEN_DEFAULT = "Permission denied."
 NOT_FOUND_DEFAULT = "Resource not found."
 CONFLICT_DEFAULT = "Conflict with existing resource."

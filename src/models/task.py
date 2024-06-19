@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT
 
-from src.db.base_class import Base
+from src.core.db.base_class import Base
 
 
 class Task(Base):
