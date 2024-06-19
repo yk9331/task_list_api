@@ -12,4 +12,8 @@ elif [[ $1 == upgrade ]]; then
     docker-compose -f docker-compose.yaml run --rm app alembic -x data=true upgrade  $2
 elif [[ $1 == downgrade ]]; then
     docker-compose -f docker-compose.yaml run --rm app alembic -x data=true downgrade $2
+elif [[ $1 == test ]]; then
+    docker-compose -f docker-compose.test.yaml up --exit-code-from app-test
+    # docker-compose -f docker-compose.test.yaml up --exit-code-from app-test --build app-test
+    # docker-compose -f docker-compose.test.yaml down -v
 fi
