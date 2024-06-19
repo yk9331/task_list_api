@@ -36,6 +36,7 @@ class Settings(DBSettings):
     """
 
     ENV: str = "local"
+    API_VERSION: str = "v1"
 
 
 def get_settings() -> Settings:
