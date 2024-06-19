@@ -1,15 +1,5 @@
-from sqlalchemy import MetaData
-from sqlalchemy.orm import declarative_base
+# Import all the models, so that Base has them before being
+# imported by Alembic for 'autogenerate' support
 
 import src.models  # noqa
-
-convention = {
-    "ix": "ix_%(column_0_label)s",
-    "uq": "uq_%(table_name)s_%(column_0_name)s",
-    "ck": "ck_%(table_name)s_%(constraint_name)s",
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    "pk": "pk_%(table_name)s",
-}
-
-metadata = MetaData(naming_convention=convention)
-Base = declarative_base(metadata=metadata)
+from src.db.base_class import Base  # noqa
