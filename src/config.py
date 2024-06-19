@@ -1,11 +1,13 @@
 import os
 from typing import Any, Dict, Optional
 
-from pydantic import validator
-from pydantic_settings import BaseSettings
+from pydantic import ValidationInfo, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class DBSettings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env")
+
     DB_HOST: str
     DB_PORT: int = 3306
     DB_USER: str
@@ -20,14 +22,12 @@ class DBSettings(BaseSettings):
         "pool_recycle": 1800,
     }
 
-    @validator("SQLALCHEMY_DATABASE_URI", pre=True)
-    def assemble_db_uri(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+    @field_validator("SQLALCHEMY_DATABASE_URI", mode="before")
+    def assemble_db_uri(cls, v: Optional[str], info: ValidationInfo) -> Any:
         if isinstance(v, str):
             return v
+        values = info.data
         return f"mysql+pymysql://{values.get('DB_USER')}:{values.get('DB_PASSWORD')}@{values.get('DB_HOST')}:{values.get('DB_PORT')}/{values.get('DB_DATABASE')}"
-
-    class Config:
-        env_file = ".env"
 
 
 class Settings(DBSettings):
