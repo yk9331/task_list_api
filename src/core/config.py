@@ -38,6 +38,9 @@ class Settings(DBSettings):
     ENV: str = "local"
     API_VERSION: str = "v1"
 
+    JWT_SECRET_KEY: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1
+
 
 def get_settings() -> Settings:
     configs = {
