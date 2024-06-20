@@ -30,7 +30,9 @@ def db():
 
 @pytest.fixture(scope="class", autouse=True)
 def session(app, db):
-    """Returns an sqlalchemy session, and after the test tears down everything properly."""
+    """
+    Returns an sqlalchemy session, and after the test tears down everything properly.
+    """
     from src.core.db.session import get_db
 
     connection = db.connect()
