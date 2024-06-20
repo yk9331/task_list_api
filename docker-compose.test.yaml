@@ -39,7 +39,7 @@ services:
     volumes:
       - ./:/app/code
     environment:
-      - ENV=local
+      - ENV=test
       - DB_HOST=mysql-test
       - DB_PORT=3306
       - DB_USER=root
