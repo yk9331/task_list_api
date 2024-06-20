@@ -1,8 +1,6 @@
 from sqlalchemy import MetaData
 from sqlalchemy.orm import declarative_base
 
-import src.models  # noqa
-
 convention = {
     "ix": "ix_%(column_0_label)s",
     "uq": "uq_%(table_name)s_%(column_0_name)s",

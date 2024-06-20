@@ -2,7 +2,7 @@
 
 if [[ $1 == dev ]]; then
     docker-compose -f docker-compose.yaml up
-elif [[ $1 == rebuild ]]; then
+elif [[ $1 == dev-rebuild ]]; then
     docker-compose -f docker-compose.yaml up --build app
 elif [[ $1 == clear ]]; then
     docker-compose -f docker-compose.yaml down -v
@@ -13,7 +13,9 @@ elif [[ $1 == upgrade ]]; then
 elif [[ $1 == downgrade ]]; then
     docker-compose -f docker-compose.yaml run --rm app alembic -x data=true downgrade $2
 elif [[ $1 == test ]]; then
+    docker-compose -f docker-compose.test.yaml down -v
     docker-compose -f docker-compose.test.yaml up --exit-code-from app-test
-    # docker-compose -f docker-compose.test.yaml up --exit-code-from app-test --build app-test
-    # docker-compose -f docker-compose.test.yaml down -v
+elif [[ $1 == test-rebuild ]]; then
+    docker-compose -f docker-compose.test.yaml down -v
+    docker-compose -f docker-compose.test.yaml up --exit-code-from app-test --build app-test
 fi

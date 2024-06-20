@@ -6,6 +6,10 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class DBSettings(BaseSettings):
+    """
+    Database related environment variables
+    """
+
     model_config = SettingsConfigDict(env_file=".env")
 
     DB_HOST: str
@@ -32,16 +36,32 @@ class DBSettings(BaseSettings):
 
 class Settings(DBSettings):
     """
-    Basic Settings
+    Application related environment variables
     """
 
     ENV: str = "local"
+    API_VERSION: str = "v1"
+
+    JWT_SECRET_KEY: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1
+
+
+class TestSettings(Settings):
+    """
+    Ovreride settings for testing
+    """
+
+    model_config = SettingsConfigDict(env_file=None)
+
+    ENV: str = "test"
+    JWT_SECRET_KEY: str = "test_secret_key"
 
 
 def get_settings() -> Settings:
     configs = {
         "migration": DBSettings,
         "local": Settings,
+        "test": TestSettings,
     }
     return configs.get(os.getenv("ENV", "local"))()
 
