@@ -1,4 +1,5 @@
 CLIENT_ERROR_DEFAULT = "Bad input parameters."
+DATA_VALIDATION_FAIL = "Data validation fail."
 
 UNAUTHORIZED_DEFAULT = "Invalid authorization."
 INVALID_AUTHORIZATION_SCHEME = "Invalid authorization scheme."

@@ -1,5 +1,6 @@
 import pytest
 
+import src.core.error_msg as error_msg
 from src.models import Task
 from tests.utils.dummy_data import tasks
 from tests.utils.util import get_versioned_endpoint
@@ -27,6 +28,7 @@ def test_anonymous_access_fail(client, method, endpoint):
     req_func = getattr(client, method)
     response = req_func(get_versioned_endpoint(endpoint))
     assert response.status_code == 401
+    assert response.json()["error"]["message"] == error_msg.UNAUTHORIZED_DEFAULT
 
 
 """
@@ -76,6 +78,7 @@ def test_user_create_task_fail_invalid_body(user_client, body):
 
     response = user_client.post(get_versioned_endpoint("/task"), json=body)
     assert response.status_code == 422
+    assert response.json()["error"]["message"] == error_msg.DATA_VALIDATION_FAIL
 
 
 """
@@ -112,6 +115,7 @@ def test_user_update_task_fail_invalid_body(user_client, body):
 
     response = user_client.put(get_versioned_endpoint(f"/task/{task_id}"), json=body)
     assert response.status_code == 422
+    assert response.json()["error"]["message"] == error_msg.DATA_VALIDATION_FAIL
 
 
 def test_user_update_task_fail_not_found(user_client):
@@ -120,6 +124,7 @@ def test_user_update_task_fail_not_found(user_client):
 
     response = user_client.put(get_versioned_endpoint(f"/task/{task_id}"), json=body)
     assert response.status_code == 404
+    assert response.json()["error"]["message"] == error_msg.NOT_FOUND_DEFAULT
 
 
 """
@@ -142,3 +147,4 @@ def test_user_delete_task_fail_not_found(user_client):
 
     response = user_client.delete(get_versioned_endpoint(f"/task/{task_id}"))
     assert response.status_code == 404
+    assert response.json()["error"]["message"] == error_msg.NOT_FOUND_DEFAULT
