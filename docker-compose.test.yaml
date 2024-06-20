@@ -45,7 +45,7 @@ services:
       - DB_USER=root
       - DB_PASSWORD=password
       - DB_DATABASE=task_list_test
-    command: /bin/sh -c "alembic upgrade head && pytest"
+    command: /bin/sh -c "alembic upgrade head && pytest --cov=src"
 
 networks:
   task-list-api-test:
