@@ -2,6 +2,7 @@ from typing import Any, Dict, Generic, Optional, Type, TypeVar, Union
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -22,30 +23,32 @@ class BaseController(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         not_found_msg: str = error_msg.NOT_FOUND_DEFAULT
     ):
         """
-        CRUD object with default methods to Create, Read, Update, Delete (CRUD).
+        Controller with default methods to Create, Read, Update, Delete (CRUD).
 
         **Parameters**
 
         * `model`: A SQLAlchemy model class
-        * `schema`: A Pydantic model (schema) class
+        * `not_found_msg`: A message to return when the object is not found
         """
         self.model = model
         self.not_found_msg = not_found_msg
 
     def get_all(self, db: Session) -> Optional[ModelType]:
-        return db.query(self.model).all()
+        return db.scalars(select(self.model)).all()
 
     def get_by_id(self, db: Session, id: Any) -> Optional[ModelType]:
-        return db.query(self.model).get(id)
+        return db.get(self.model, id)
 
     def get_by_id_or_404(self, db: Session, id: Any) -> Optional[ModelType]:
-        db_obj = db.query(self.model).get(id)
+        db_obj = db.get(self.model, id)
         if not db_obj:
             raise exc.NotFoundError(self.not_found_msg)
         return db_obj
 
     def get_by_id_for_update(self, db: Session, id: Any) -> Optional[ModelType]:
-        db_obj = db.query(self.model).with_for_update().get(id)
+        db_obj = db.scalars(
+            select(self.model).filter_by(id=id).with_for_update()
+        ).first()
         if not db_obj:
             raise exc.NotFoundError(self.not_found_msg)
         return db_obj
