@@ -26,19 +26,19 @@ Others
 
 ## Run locally
 
-1. Devlopment - start server with docker-compose (server will reload when code changed)
-    1. Run `sh docker.sh upgrade head` to migrate database at the first time
+1. **Development** - start server with docker-compose (server will reload when code changed)
+    1. Run `sh docker.sh upgrade head` to migrate database for the first time
     2. Run `sh docker.sh dev` to start server
 
     other commands
     - Run `sh docker.sh dev-rebuild` to rebuild docker image when start
     - Run  `sh docker.sh clear` to clear all resource
     - Run `sh docker.sh migrate "migration name"` to generate migration script with alembic
-    - Run `sh docker.sh downgrade -1` to downgraed 1 revision
+    - Run `sh docker.sh downgrade -1` to downgrade 1 revision
 
     [alembic migration command reference](https://alembic.sqlalchemy.org/en/latest/tutorial.html#create-a-migration-script)
 
-2. Test - run test with docker-compose
+2. **Test** - run test with docker-compose
 
     - Run  `sh docker.sh test`
     - Run  `sh docker.sh test-rebuild` if package updated
