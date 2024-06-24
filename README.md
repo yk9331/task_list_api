@@ -12,8 +12,8 @@ RESTful API
 - Framework: **FastAPI 0.111**
 
 Database
-- MySQL
-- ORM : SQLAlchemy 2.0
+- MySQL 8.0
+- ORM : SQLAlchemy
 - Migration : Alembic
 
 Others
@@ -30,20 +30,25 @@ Others
     1. Run `sh docker.sh upgrade head` to migrate database for the first time
     2. Run `sh docker.sh dev` to start server
 
-    other commands
-    - Run `sh docker.sh dev-rebuild` to rebuild docker image when start
-    - Run  `sh docker.sh clear` to clear all resource
-    - Run `sh docker.sh migrate "migration name"` to generate migration script with alembic
-    - Run `sh docker.sh downgrade -1` to downgrade 1 revision
+    - other commands
+      - Run `sh docker.sh dev-rebuild` to rebuild docker image when start
+      - Run  `sh docker.sh clear` to clear all resource
+      - Run `sh docker.sh migrate "migration name"` to generate migration script with alembic
+      - Run `sh docker.sh downgrade -1` to downgrade 1 revision
 
-    [alembic migration command reference](https://alembic.sqlalchemy.org/en/latest/tutorial.html#create-a-migration-script)
+      - [alembic migration command reference](https://alembic.sqlalchemy.org/en/latest/tutorial.html#create-a-migration-script)
 
-2. **Test** - run test with docker-compose
+    - set up pre-commit hook for code style check and lint
+      1. Run `poetry install`
+      2. Run `pre-commit install`
+
+3. **Test** - run test with docker-compose
 
     - Run  `sh docker.sh test`
     - Run  `sh docker.sh test-rebuild` if package updated
 
 ## Project Structure
+Simplified Clean Architecture that combines repository and service as controller.
 ```
 ├── .github
 │   └── workflows         // github action scripts
@@ -54,7 +59,7 @@ Others
 │   │   └── db            // db orm setting
 │   ├── models            // db schema
 │   ├── routers           // api router definition
-│   │   └── endpoints     // endpoint definitaion
+│   │   └── endpoints     // endpoint definition
 │   ├── schemas           // request/response schema
 │   └── main.py           // app entry point
 └── tests                 // api intergration test, unit test
@@ -83,3 +88,11 @@ DELETE  /v1/task/{id}   delete task
 
 ## Dockerfile Best Practice
 Use slim image and multi-stage build to reduce final image size from 1.23GB to 206 MB
+
+## Database schema
+tasks
+| Field  | Type         | Null | Key | Default | Extra          |
+| ------ | ------------ | ---- | --- | ------- |--------------- |
+| id     | int          | No   | PRI |         | auto_increment |
+| name   | varchar(256) | No   |     |         |                |
+| status | tinyint      | No   |     | 0       |                |
