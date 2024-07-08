@@ -75,7 +75,8 @@ Full Document:
 
 Public Endpoints:
 ```
-POST    /v1/user/login  get access token with name
+POST    /v1/user/register  register with email and password
+POST    /v1/user/login  login with email and password
 ```
 
 Private Endpoints (with Bearer Authentication):
@@ -96,3 +97,11 @@ tasks
 | id     | int          | No   | PRI |         | auto_increment |
 | name   | varchar(256) | No   |     |         |                |
 | status | tinyint      | No   |     | 0       |                |
+
+
+users
+| Field    | Type         | Null | Key | Default | Extra          |
+| -------- | ------------ | ---- | --- | ------- |--------------- |
+| id       | int          | No   | PRI |         | auto_increment |
+| email    | varchar(320) | No   | UNI |         |                |
+| password | varchar(256) | No   |     |         |                |
