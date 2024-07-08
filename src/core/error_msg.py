@@ -4,6 +4,7 @@ DATA_VALIDATION_FAIL = "Data validation fail."
 UNAUTHORIZED_DEFAULT = "Invalid authorization."
 INVALID_AUTHORIZATION_SCHEME = "Invalid authorization scheme."
 INVALID_TOKEN = "Invalid or expired token."
+INVALID_PASSWORD = "Invalid password."
 
 FORBIDDEN_DEFAULT = "Permission denied."
 NOT_FOUND_DEFAULT = "Resource not found."

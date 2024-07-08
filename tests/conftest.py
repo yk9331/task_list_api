@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
 from src.core.config import settings
+from src.models import User
 from tests.utils.dummy_data_generator import create_dummy_data
 
 
@@ -61,7 +62,7 @@ def client(app):
 
 
 @pytest.fixture
-def user_client(app):
+def user_client(app, session):
     """
     Overrides the auth_user dependency to bypass authentication.
     Should return valid test user after user services are implemented.
@@ -69,6 +70,6 @@ def user_client(app):
     from src.core.auth import auth_user
 
     with TestClient(app) as c:
-        app.dependency_overrides[auth_user] = lambda: None
+        app.dependency_overrides[auth_user] = lambda: session.query(User).first()
         yield c
         app.dependency_overrides = {}

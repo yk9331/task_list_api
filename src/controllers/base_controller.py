@@ -53,6 +53,15 @@ class BaseController(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             raise exc.NotFoundError(self.not_found_msg)
         return db_obj
 
+    def get_by_filter(self, db: Session, **kwargs) -> Optional[ModelType]:
+        return db.scalars(select(self.model).filter_by(**kwargs)).first()
+
+    def get_by_filter_or_404(self, db: Session, **kwargs) -> Optional[ModelType]:
+        db_obj = db.scalars(select(self.model).filter_by(**kwargs)).first()
+        if not db_obj:
+            raise exc.NotFoundError(self.not_found_msg)
+        return db_obj
+
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
         try:
             create_data = jsonable_encoder(
